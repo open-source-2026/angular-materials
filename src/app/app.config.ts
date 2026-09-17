@@ -1,10 +1,19 @@
 import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
+import {provideHttpClient} from '@angular/common/http';
+import {provideTranslateLoader, provideTranslateService} from '@ngx-translate/core';
+import {provideTranslateHttpLoader} from '@ngx-translate/http-loader';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
-    provideRouter(routes)
+    provideHttpClient(), // This way you can use HttpClient in your application
+
+    // Define the route for the app working with i18n
+    provideTranslateService({
+        loader: provideTranslateHttpLoader({prefix: './i18n/', suffix: '.json'}),
+        fallbackLang: 'en'
+    })
   ]
 };
